@@ -1,6 +1,6 @@
 export const categories = ['Coffee', 'Non-coffee', 'Pastries', 'Sandwiches', 'Pasta', 'Meals', 'Add-ons'] as const;
 export type Category = typeof categories[number];
-export type Product = { id: string; name: string; category: Category; description: string; price: number; image: string; sizes?: {label: string; price: number}[]; sweetness?: boolean; soldOut?: boolean };
+export type Product = { id: string; name: string; category: Category; description: string; price: number; image: string; sizes?: {label: string; price: number}[]; sweetness?: boolean; soldOut?: boolean; archived?:boolean };
 // Demonstration prices and availability, not a production catalog.
 export const products: Product[] = [
   {id:'vietnamese-coffee', name:'Vietnamese Coffee', category:'Coffee', description:'Rich coffee, smooth and bold.', price:120, image:'iced vietnamese latte - grab.png', sizes:[{label:'16oz',price:120},{label:'22oz',price:150}], sweetness:true},
