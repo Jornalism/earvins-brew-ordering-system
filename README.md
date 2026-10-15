@@ -61,3 +61,16 @@ Modified:
 - `package.json`, `package-lock.json`, `README.md`
 
 Dependencies added: `qrcode` and its TypeScript definitions. Reference files and original source assets are preserved. All Git operations are managed by the project owner.
+
+## Supabase foundation (Phase 3A)
+
+The Supabase packages are installed, but the current customer and admin interfaces intentionally continue to use their local mock data. No tables, migrations, authentication, live ordering, or production API routes are included yet.
+
+To configure this local project, copy `.env.example` to `.env.local` in the project root. In `.env.local`, replace only the two placeholders with the Project URL and Publishable key from Supabase Dashboard → Project Settings → API (or the project Connect dialog):
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+```
+
+`.env.local` is ignored by Git. The reusable clients live in `src/lib/supabase/client.ts` for browser code and `src/lib/supabase/server.ts` for server-side code. They use only the URL and publishable key; do not add a service-role, secret, or any other privileged key to a `NEXT_PUBLIC_` variable. A future authentication phase will add the session-refresh proxy and authorization checks when those features are approved.
