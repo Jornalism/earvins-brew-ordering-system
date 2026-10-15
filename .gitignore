@@ -1,0 +1,31 @@
+# Dependencies and Next.js build output
+node_modules/
+.next/
+out/
+build/
+dist/
+
+# Environment files, credentials, and local secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+
+# Logs, temporary files, and editor/OS metadata
+*.log
+*.tmp
+*.temp
+tmp/
+temp/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local source library: retained locally; add selected assets with Git LFS later.
+references/product-images/
