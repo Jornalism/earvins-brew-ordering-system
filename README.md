@@ -31,12 +31,18 @@ Open `/admin` (redirects to `/admin/orders`). The admin uses the original header
 
 - `/admin/orders`: active queue with Confirm Payment, Mark Ready, Complete Order, and cancellation. Use **Load demo orders** once to populate examples without replacing existing orders. Completed and Cancelled orders move to history.
 - `/admin/history`: terminal orders with item details, totals, dates/times, and a Philippine-time date filter. Older saved demo orders without a timestamp display “Date unavailable”.
-- `/admin/products`: search, add, edit, archive/restore, and Available/Sold Out. Product editing includes descriptions, category, prices, sizes, sweetness, existing café images, and PNG/JPG/WebP uploads up to 1 MB. Uploaded images are held in browser storage; storage failures are reported. Archived items disappear from the customer menu. Sold-out items cannot be added, and unavailable cart items block checkout until removed.
+- `/admin/products`: search, edit existing products, archive/restore, and Available/Sold Out. Café staff cannot create or permanently delete products. To add a new product, please contact your website administrator. Editing includes names, descriptions, categories, prices, sizes, sweetness, existing café images, and PNG/JPG/WebP uploads up to 1 MB. Uploaded images are held in browser storage; storage failures are reported. Archived items disappear from the customer menu. Sold-out items cannot be added, and unavailable cart items block checkout until removed.
 - `/admin/tables`: add unique table numbers, real scannable QR previews, PNG downloads, single-table print layout, and deactivate/reactivate. QR links use the current local origin and the table number. Localhost codes work on the host computer only. Inactive tables cannot place new demo orders.
 
 Catalog and order changes persist in localStorage and update other tabs on the same origin. Table selection uses sessionStorage. This is a frontend demonstration, not a synchronized production database: simultaneous writes are not transactional, data is confined to this browser/profile, and clearing browser storage removes demo changes. Image storage is limited by the browser quota. Admin access is an unprotected demo route; authentication, permissions, real queue generation/daily resets, production QR hosting, payment processing, Supabase, and backend APIs are pending. Printed output was verified through browser print media; physical printing depends on the user's printer.
 
-Run `npm run lint`, `npm run typecheck`, `npm run build`, and `npm run test:e2e`. The Edge browser suite exercises the customer and admin workflows at 375, 390, 768, and 1440 pixels, and writes screenshots under ignored `test-results/`.
+Run `npm run lint`, `npm run typecheck`, `npm run build`, and `npm run test:e2e`. The Edge browser suite exercises the customer and admin workflows at 375, 390, 768, 1024, and 1440 pixels, and writes screenshots under ignored `test-results/`.
+
+### Required product permissions for the future backend
+
+The current product editor accepts an existing product only. The mock catalog update function replaces an existing ID and never inserts a new product; there is no permanent-delete operation. These frontend restrictions are not security: browser storage can still be edited directly.
+
+When implementing the backend, server-side authorization must deny product creation to café admin/staff accounts. Only the website developer/super-admin role may create products. Do not expose creation APIs to café admin accounts; enforce this restriction on every server/API request and in database policies, even if the UI hides creation controls. Café admins may update existing products and archive/restore them, but must not permanently delete them. Authentication, role checks, and backend APIs are not implemented in this frontend phase.
 
 ### Phase 2 file inventory
 
