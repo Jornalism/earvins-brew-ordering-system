@@ -29,3 +29,8 @@ Thumbs.db
 
 # Local source library: retained locally; add selected assets with Git LFS later.
 references/product-images/
+
+# TypeScript cache and browser test artifacts
+*.tsbuildinfo
+test-results/
+playwright-report/

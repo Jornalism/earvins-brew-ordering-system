@@ -1,0 +1,13 @@
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import {useOrder, type CartItem} from './order-provider';
+import {money, type OrderStatus} from '@/lib/menu';
+export function BrandHeader(){return <header className="brand-header"><Link href="/menu" aria-label="Earvin’s Brew — menu"><Image src="/images/Earvins's Logo.png" alt="Earvin’s Brew Café & Bakery" width={1012} height={527} priority className="brand-logo"/></Link></header>}
+export function CartLink(){const {cart}=useOrder();const count=cart.reduce((sum,x)=>sum+x.quantity,0);return <Link className="cart-link" href="/cart" aria-label={`Cart, ${count} items`}><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="M2 3h3l3 13h11l3-10H6M9 20h.01M18 20h.01" strokeLinecap="round"/><circle cx="9" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg><span className="cart-count">{count}</span></Link>}
+export function PageBar({title,back='/menu'}:{title:string;back?:string}){return <div className="page-bar"><Link className="back-link" href={back} aria-label="Back">‹</Link><h1>{title}</h1><CartLink/></div>}
+export function Quantity({value,onChange}:{value:number;onChange:(value:number)=>void}){return <div className="quantity"><button type="button" aria-label="Decrease quantity" disabled={value<=1} onClick={()=>onChange(value-1)}>−</button><output aria-label="Quantity" aria-live="polite">{value}</output><button type="button" aria-label="Increase quantity" disabled={value>=99} onClick={()=>onChange(value+1)}>+</button></div>}
+export function ItemSummary({item,actions}:{item:CartItem;actions?:React.ReactNode}){return <div className="summary-row"><div><h3>{item.name}</h3>{item.size&&<p>{item.size}</p>}{item.sweetness&&<p>{item.sweetness}</p>}{item.note&&<p className="item-note">Note: {item.note}</p>}{actions}</div><div className="line-price"><span>{money(item.price*item.quantity)}</span><small>{item.quantity}x</small></div></div>}
+export function StatusBadge({status}:{status:OrderStatus}){return <span className={`status-badge status-${status.toLowerCase().replaceAll(' ','-')}`}>{status}</span>}
+export function CounterNotice(){return <div className="counter-notice"><span aria-hidden="true" className="cup">☕</span><div><strong>Please proceed to the counter to pay for your order.</strong><p>After payment, wait for your queue number to be called, then collect your order at the counter.</p></div></div>}
+export function EmptyState({title,children}:{title:string;children:React.ReactNode}){return <div className="empty-state"><h2>{title}</h2><p>{children}</p><Link className="button primary" href="/menu">Back to Menu</Link></div>}
